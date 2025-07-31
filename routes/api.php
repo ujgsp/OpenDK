@@ -131,3 +131,5 @@ Route::group(['prefix' => 'v1', 'middleware' => 'xss_sanitization'], function ()
         });
     });
 });
+
+Route::get('/hosts', [\App\Http\Controllers\Api\HostController::class, 'index']);
