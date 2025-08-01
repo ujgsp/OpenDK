@@ -13,28 +13,13 @@ jobs:
       - name: Checkout Ansible Code
         uses: actions/checkout@v3
 
-      - name: Install Ansible
-        run: |
-          sudo apt update
-          sudo apt install -y ansible
-
       - name: Set up SSH
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          echo "${{ secrets.CICD_SERVER_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+          ssh-keyscan -H ${{ secrets.CICD_SERVER_IP }} >> ~/.ssh/known_hosts
 
-      - name: Create inventory file
+      - name: Trigger Ansible Playbook on CI/CD Server
         run: |
-          cat <<EOF > inventory.yml
-          all:
-            hosts:
-              target:
-                ansible_host: ${{ secrets.SERVER_IP }}
-                ansible_user: ${{ secrets.SERVER_USER }}
-                ansible_ssh_private_key_file: ~/.ssh/id_rsa
-          EOF
-
-      - name: Run Ansible Playbook
-        run: ansible-playbook -i inventory.yml ansible/playbook.yml
+          ssh -i ~/.ssh/id_rsa ${{ secrets.CICD_SERVER_USER }}@${{ secrets.CICD_SERVER_IP }} "cd /opt/ansible && ansible-playbook -i inventory.yml playbook.yml"
