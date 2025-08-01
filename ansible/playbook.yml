@@ -1,6 +1,0 @@
-- name: Deploy aplikasi OpenDK ke server development
-  hosts: all
-  become: true
-
-  roles:
-    - deploy
