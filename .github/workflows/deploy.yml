@@ -1,4 +1,4 @@
-name: Deploy Laravel with Ansible
+name: Deploy OpenDK with Ansible
 
 on:
   release:
@@ -22,4 +22,4 @@ jobs:
 
       - name: Trigger Ansible Playbook on CI/CD Server
         run: |
-          ssh -i ~/.ssh/ansible-cicd -p 1975 ${{ secrets.CICD_SERVER_USER }}@${{ secrets.CICD_SERVER_IP }} "cd /opt/ansible && ansible-playbook -i inventory.yml playbook.yml"
+          ssh -i ~/.ssh/ansible-cicd -p 1975 ${{ secrets.CICD_SERVER_USER }}@${{ secrets.CICD_SERVER_IP }} "cd /opt/ansible && ansible-playbook -i inventories/production/inventory.yml playbooks/deploy-opendk.yml"
