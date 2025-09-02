@@ -13,7 +13,6 @@ concurrency:
 
 jobs:
   deploy-production:
-    if: github.event.release.target_commitish == 'development' && github.event.release.prerelease == false
     name: Deploy (Release)
     runs-on: ubuntu-latest
 
