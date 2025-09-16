@@ -1,6 +1,9 @@
 name: Deploy with Ansible
 
 on:
+  push:
+    branches:
+      - beta
   release:
     types: [published, prereleased, edited]
 
