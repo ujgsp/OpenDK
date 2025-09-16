@@ -1,4 +1,4 @@
-name: Deploy with Ansible
+name: Playwright Deploy with Ansible
 
 on:
   push:
